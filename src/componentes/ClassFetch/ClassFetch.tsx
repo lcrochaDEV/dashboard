@@ -6,7 +6,7 @@ class ConnectFetch {
         this.url = url;
         this.Dataheaders = Dataheaders;
     }
-    async conectJsonUrlJson(){
+    async metodGet(){
         try { 
             const response = await fetch(this.url); 
             if(response.status === 200){

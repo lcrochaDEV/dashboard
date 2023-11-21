@@ -9,7 +9,8 @@ interface IProdutos{
     size?: string,
     color?: string
     value?: string,
-    stock?: string
+    stock?: string,
+    gender?: string
 }
 const LinkStyles = styled(Link)`
     display: flex;
@@ -49,7 +50,7 @@ const Table = () => {
         async function conectJson() {
             try{
                 let data = new ConnectFetch(URLFETCH);
-                let comandList = await data.conectJsonUrlJson();
+                let comandList = await data.metodGet();
                 setprodutos(comandList);
             }catch(error){
                 console.log('Url não encontrada!')
@@ -71,6 +72,7 @@ const Table = () => {
                     <Th>CORES</Th>
                     <Th>PREÇO</Th>
                     <Th>DISPONÍVEIS</Th>
+                    <Th>GÊNERO</Th>
                 </tr>
                 <tr>
                     <Td><Img src={produtos.src}/></Td>
@@ -79,6 +81,7 @@ const Table = () => {
                     <Td>{produtos.color}</Td>
                     <Td>R${produtos.value}</Td>
                     <Td>{produtos.stock}</Td>
+                    <Td>{produtos.gender}</Td>
                 </tr>
             </ProdutoTable>
             </LinkStyles>

@@ -57,6 +57,8 @@ interface IheadersData {
     color?: string
     value?: string,
     stock?: string,
+    gender: string,
+    selectItens?: string[]
 }
 //React.FormEvent<HTMLFormElement>
 const Cadastrar = () => {
@@ -72,10 +74,13 @@ const Cadastrar = () => {
     const [src, setSrc] = useState('');
     
     //CAMPO SELECTION E SUAS OPÇÕES
-    const [gender, setGender] = useState([] as string[]);
+    const [selectItens, setSelectItens] = useState([] as string[]);
+
     useEffect(() => {
-        setGender(['Masculino', 'Feminina', 'Kids'])
+        setSelectItens(['Masculino', 'Feminina', 'Kids'])
       }, []);
+    
+    const [gender, setGender] = useState('');
 
     const headersData: IheadersData = {
         src: src,
@@ -84,11 +89,12 @@ const Cadastrar = () => {
         model: model,
         color: color,
         value: value,
+        gender: gender,
         stock: stock
     }
 
     //POST
-    const URLFETCH = 'http://192.168.1.252:3000/home/2';
+    const URLFETCH = 'http://192.168.1.252:3000/home/';
     async function conectJson() {
         try{
             let data = new ConnectFetch(URLFETCH, headersData);   
@@ -98,9 +104,7 @@ const Cadastrar = () => {
             console.log('Url não encontrada!')
         }
     }
-    const alertForms = () => {
-        alert(name)
-    }
+
     return (
         <Section>
             <Article>
@@ -119,10 +123,10 @@ const Cadastrar = () => {
                     <Input type="text" name="valuer" {... stylesStys} value={value} required onChange={value => setValue(value.target.value)}/>
                     <Label>DISPONÍVEL:</Label>
                     <Input type="text" name="stock" {... stylesStys} value={stock} required onChange={stock => setStock(stock.target.value)}/>
+                    <Label>GENERO:</Label>
+                    <Selection name={'produtos'} selectItens={selectItens} hooksChildren={(event: React.ChangeEvent<HTMLInputElement>) => setGender(event.target.value)}/>
                     <Label>URL DA IMAGEM:</Label>
                     <Input type="text" name="url" {... stylesStys} value={src} required onChange={src => setSrc(src.target.value)}/>
-                    <Label>GENERO:</Label>
-                    <Selection gender={gender}/>
                     <Label>LOGIN:</Label>
                     <Input type="text" name="login" {... stylesStys} />
                     <Botton type="submit" _width="100px" _height="40px" _margin="10px" onClick={conectJson}>Enviar</Botton>

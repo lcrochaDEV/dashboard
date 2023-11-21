@@ -4,16 +4,18 @@ const Select = styled.select`
     border-color: #0086e4;
     padding: 5px;
 `;
-interface Props {
-    gender?: string[],
-}
 
-const Selection = ({ gender }: Props) => {
+interface Props {
+    name: string,
+    selectItens?: string[],
+    hooksChildren: any
+}
+const Selection = ({ name, selectItens, hooksChildren }: Props) => {
 
     return(
-        <Select name="produtos">
-            <option selected disabled value="">Selecione uma Categoria</option>
-                {gender?.map(itens =>
+        <Select name={name} onChange={hooksChildren}>
+            <option selected disabled value="" >Selecione uma Categoria</option>
+                {selectItens?.map(itens =>
                     <option key={itens} value={itens}>{itens}</option>           
                 )}
         </Select>
