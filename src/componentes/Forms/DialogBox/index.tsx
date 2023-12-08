@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Cadastrar from "../Cadastrar";
+import Update from "../Update";
 
 const Dialog = styled.dialog`
     position: fixed;
@@ -22,13 +23,19 @@ const Cancel = styled.span`
     font-size: 35px;
     color: #FFF;
 `;
+interface IhooksChildren{
+    hooksChildren: any
+}
+interface Props {
+    _id?: string
+}
 
-const DialogBox = ({ hooksChildren }: any) =>  {
-
+const DialogBox = ({ hooksChildren, _id}: IhooksChildren & Props) =>  {
+  
     return (
         <>   
         <Dialog>
-            <Cadastrar/>
+            {!_id ? <Cadastrar/> : <Update _id={_id}/>}
             <Cancel className="material-symbols-outlined" onClick={hooksChildren}>cancel</Cancel>
         </Dialog>   
         </>

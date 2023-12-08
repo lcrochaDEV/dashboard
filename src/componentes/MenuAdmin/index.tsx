@@ -7,7 +7,7 @@ import UserContext from "componentes/ContextApi";
 const MenuAdminStyled = styled.header`
     width: 100%;
     max-width: 100%;
-    background: rgba(133, 125, 252, 0.9);
+    background-color:var(--menu-top-background);
     display: flex;
     justify-content: space-between;
 `;

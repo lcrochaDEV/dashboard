@@ -7,7 +7,7 @@ import Table from './Table';;
 
 const H1 = styled.h1`
     margin: 10px;
-    color: rgba(133, 125, 252, 0.9);
+    color: var(--font-color-h)
 `;
 const Section = styled.section`
     width: 100%;

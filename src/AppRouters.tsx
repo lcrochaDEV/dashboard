@@ -7,6 +7,7 @@ import AreaAdmin from 'componentes/AreaAdmin';
 import Produtos from 'componentes/Produtos';
 import Erro404 from 'componentes/Erro404';
 
+
 function AppRoutes() {
   return (
         //ROTA PARA ÁREA ADMINISTRATIVA

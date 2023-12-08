@@ -1,10 +1,10 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Input from "../Input";
 import Botton from "../Button";
 import CadastrosLogo from "./cadastro.png"
-import { useEffect, useState } from "react";
 import Selection from "../Select";
-import ConnectFetch from "componentes/ClassFetch/ClassFetch";
+import ConnectApi from "componentes/ClassFetch/ClassConnecectApi";
 
 const Section = styled.section`
     display: flex;
@@ -78,7 +78,7 @@ const Cadastrar = () => {
 
     useEffect(() => {
         setSelectItens(['Masculino', 'Feminina', 'Kids'])
-      }, []);
+    }, []);
     
     const [gender, setGender] = useState('');
 
@@ -92,19 +92,13 @@ const Cadastrar = () => {
         gender: gender,
         stock: stock
     }
-
+    
     //POST
-    const URLFETCH = 'http://192.168.1.252:3000/home/';
-    async function conectJson() {
-        try{
-            let data = new ConnectFetch(URLFETCH, headersData);   
-            let comandList = await data.metodPost();
-            console.log(comandList);
-        }catch(error){
-            console.log('Url não encontrada!')
-        }
-    }
-
+    const apiDataId = async () => {
+        let ApiDataReturn = new ConnectApi('', headersData)
+        let post_data = await ApiDataReturn.methodPost();
+        return post_data;
+    }  
     return (
         <Section>
             <Article>
@@ -129,7 +123,7 @@ const Cadastrar = () => {
                     <Input type="text" name="url" {... stylesStys} value={src} required onChange={src => setSrc(src.target.value)}/>
                     <Label>LOGIN:</Label>
                     <Input type="text" name="login" {... stylesStys} />
-                    <Botton type="submit" _width="100px" _height="40px" _margin="10px" onClick={conectJson}>Enviar</Botton>
+                    <Botton type="submit" _width="100px" _height="40px" _margin="10px" onClick={apiDataId}>Cadastrar</Botton>
                 </Form>
             </Article>
         </Section>
