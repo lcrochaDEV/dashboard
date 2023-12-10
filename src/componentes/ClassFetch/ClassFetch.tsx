@@ -30,7 +30,6 @@ class ConnectFetch {
             }),
         };
         try { 
-            console.log(headersData)
             const response = await fetch(this.url, headersData); 
             if(response.status === 200){
                 const apiData = await response.json();
@@ -41,6 +40,45 @@ class ConnectFetch {
         } catch (error) {
             console.error('Erro:', error); 
         }
-    } 
+    }
+
+    async metodPatch(){
+        const headersData = {
+            method: 'PATCH',
+            body: JSON.stringify(this.Dataheaders),
+            headers: new Headers({
+              'Content-Type': 'application/json; charset=UTF-8',
+              'Accept': 'application/json'
+            }),
+        };
+        try { 
+            const response = await fetch(this.url, headersData);
+            if(response.status === 200){
+                const apiData = await response.json();
+                return apiData;
+            }else if (response.status === 404){
+                console.log('Erro 404!')
+            }
+        } catch (error) {
+            console.error('Erro:', error); 
+        }
+    }
+    
+    async metodDelete(){
+        const headersData = {
+            method: 'DELETE',
+        };
+        try { 
+            const response = await fetch(this.url, headersData);
+            if(response.status === 200){
+                const apiData = await response.json();
+                return apiData;
+            }else if (response.status === 404){
+                console.log('Erro 404!')
+            }
+        } catch (error) {
+            console.error('Erro:', error); 
+        }
+    }
 }
 export default ConnectFetch;

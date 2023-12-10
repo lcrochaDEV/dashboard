@@ -6,7 +6,6 @@ import CadastrosLogo from "./cadastro.png"
 import Selection from "../Select";
 import ConnectApi from "componentes/ClassFetch/ClassConnecectApi";
 
-
 const Section = styled.section`
     display: flex;
     flex-direction: row;
@@ -49,6 +48,10 @@ const stylesStys = {
     _width: "500px",
     _valid: true
 };
+const BtnsForms = styled.div`
+  display:flex;  
+`;
+
 interface IheadersData {
     src?: string,
     name?: string,
@@ -61,23 +64,23 @@ interface IheadersData {
     selectItens?: string[]
 }
 interface Props {
-    _id: string | undefined
+    _id?: string | undefined
 }
 
 const Update = ({ _id }: Props) => {
+
+    //GET PEGA ITEN POR ID
     const [_ObjectData, set_ObjectData] = useState({} as IheadersData);
-        //GET PEGA ITEN POR ID
-        const apiDataId = async ({ _id }: Props) => {
-            let ApiDataReturn = new ConnectApi(_id)
-            let data = await ApiDataReturn.methodGet()
-            return set_ObjectData(data)
-        }
+    const apiDataId = async ({ _id }: Props) => {
+        let ApiDataReturn = new ConnectApi(_id)
+        let data = await ApiDataReturn.methodGet();
+        return set_ObjectData(data)
+    }
     useEffect(() => {
        apiDataId({_id});
     }, [_id]);
- 
+
     const reducer = (state: any, action: any) => {
-        console.log(action)
         switch (action.type) {
             case 'name':
                 return { ...state, name: action.payload };
@@ -96,23 +99,46 @@ const Update = ({ _id }: Props) => {
             case 'gender':
                 return { ...state, gender: action.payload };
             default:
-                return action;
+                return {...state, ...action};
                 //throw new Error(`Unknown action type: ${action.type}`);
             };
         } 
         
     const [state, dispatch] = useReducer(reducer, {} as IheadersData);
-    
     useEffect(() => {
         dispatch(_ObjectData);
-    });
-
+    },[_ObjectData]);
+    
     //CAMPO SELECTION E SUAS OPÇÕES
     const [selectItens, setSelectItens] = useState([] as string[]);
 
     useEffect(() => {
         setSelectItens(['Masculino', 'Feminina', 'Kids'])
     }, []);
+
+    //CRIA UM NOVO OBJETO PARA REALIZAÇÃO DO UPDATE
+    const headersData: IheadersData = {
+        src: state.src,
+        name: state.name,
+        size: state.size,
+        model: state.model,
+        color: state.color,
+        value: state.value,
+        gender: state.gender,
+        stock: state.stock
+    }
+    //PATCH ATUALIZA POR ID
+    const apiDataPatch = async () => {
+        let ApiDataReturn = new ConnectApi(_id, headersData)
+        let put_data = await ApiDataReturn.methodPatch();
+        return put_data;
+    }
+    //DELETE ITEN POR ID
+    const apiDataDelete = async () => {
+        let ApiDataReturn = new ConnectApi(_id)
+        let del_data = await ApiDataReturn.methodDelete();
+        return del_data;
+    }
 
     return (
         <Section>
@@ -138,7 +164,10 @@ const Update = ({ _id }: Props) => {
                     <Input type="text" name="url" {... stylesStys} value={state.src} required onChange={(event) => dispatch({ type: 'src', payload: event.target.value })}/>
                     <Label>LOGIN:</Label>
                     <Input type="text" name="login" {... stylesStys} />
-                    <Botton type="submit" _width="100px" _height="40px" _margin="10px">Editar</Botton>
+                    <BtnsForms>
+                        <Botton type="submit" _width="100px" _height="40px" _margin="10px" onClick={apiDataPatch}>Editar</Botton>
+                        <Botton type="submit" _width="100px" _height="40px" _margin="10px" onClick={apiDataDelete}>DELETE</Botton>
+                    </BtnsForms>
                 </Form>
             </Article>
         </Section>

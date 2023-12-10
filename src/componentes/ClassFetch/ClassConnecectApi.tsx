@@ -17,7 +17,7 @@ class ConnectApi {
             return comandList;
         }catch(error){
             console.log('Url não encontrada!')
-        }
+        } 
     }
     //POST
     async methodPost() {
@@ -30,6 +30,29 @@ class ConnectApi {
             console.log('Url não encontrada!')
         }
     }
+    //PUT
+    async methodPatch() { 
+        const URLFETCH = `http://192.168.1.252:3001/home/${this._id}`;  
+
+        try{
+            let data = new ConnectFetch(URLFETCH, this.headersData);
+            let comandList = await data.metodPatch();
+            return comandList;
+        }catch(error){
+            console.log('Url não encontrada!')
+        }
+    }
+    //DELETE
+    async methodDelete() { 
+        const URLFETCH = `http://192.168.1.252:3001/home/${this._id}`;  
+        try{
+            let data = new ConnectFetch(URLFETCH);
+            let comandList = await data.metodDelete();
+            return comandList;
+        }catch(error){
+            console.log('Url não encontrada!')
+        }
+    }
 }
 
-export default ConnectApi;
+export default ConnectApi
